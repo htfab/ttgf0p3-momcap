@@ -1,20 +1,21 @@
-<!---
-
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
-
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
-
 ## How it works
 
-Explain how your project works
+Implements a simple interdigitated metal-oxide-metal capacitor:
+
+![momcap layout illustration](momcap.png)
+
+The repo contains both a script to generate a custom size capacitor
+and a fixed instance filling a Tiny Tapeout analog slot (1x2 tiles).
 
 ## How to test
 
-Explain how to use your project
+Measure the capacitance between terminals A and B.
+
+You can use the dummy terminals to control for parasitic capacitance on the path
+between your probes and the project pins.
+
+For comparison, magic's circuit extraction estimates the capacitance at around 85 pF.
 
 ## External hardware
 
-List external hardware used in your project (e.g. PMOD, LED display, etc), if any
+Test equipment (function generator + oscilloscope, or VNA).
