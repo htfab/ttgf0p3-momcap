@@ -3,39 +3,62 @@
 WIDTH = 612
 HEIGHT = 562
 
-print("""magic
+magic_file = f"""
+magic
 tech gf180mcuD
 magscale 1 5
-timestamp 1871000000""")
+timestamp 1782900000
 
-for layer in ("metal1", "via1", "metal2", "via2", "metal3", "via3", "metal4"):
-    print(f"<< {layer} >>")
+use metal_stack  metal_stack_0
+array 0 {HEIGHT-1} 56 0 0 112
+timestamp 1782900000
+transform 0 -1 28 1 0 0
+box 0 0 84 28
 
-    if layer.startswith("metal"):
-        print(f"rect 0 0 28 {28*(2*HEIGHT+1)}")
-        print(f"rect {28*(2*WIDTH)} 0 {28*(2*WIDTH+1)} {28*(2*HEIGHT+1)}")
-        for i in range(HEIGHT+1):
-            if i % 2 == 0:
-                print(f"rect 28 {28*(2*i)} {28*(2*WIDTH-1)} {28*(2*i+1)}")
-            else:
-                print(f"rect 56 {28*(2*i)} {28*(2*WIDTH)} {28*(2*i+1)}")
+use metal_stack  metal_stack_1
+array 0 {HEIGHT-1} 56 0 0 112
+timestamp 1782900000
+transform 0 -1 {28*(2*WIDTH+1)} 1 0 0
+box 0 0 84 28
 
-    elif layer.startswith("via"):
-        for j in range(HEIGHT+1):
-            for i in range(WIDTH+1):
-                if i == 1 or i == WIDTH-1:
-                    continue
-                if (i == 0 or i == WIDTH) and (j == 0 or j == HEIGHT):
-                    continue
-                if (i+j) % 2 == 0:
-                    continue
-                if layer == "via1":
-                    print(f"rect {28*(2*i)+1} {28*(2*j)+1} {28*(2*i+1)-1} {28*(2*j+1)-1}")
-                else:
-                    print(f"rect {28*(2*i)} {28*(2*j)} {28*(2*i+1)} {28*(2*j+1)}")
+use metal_stack  metal_stack_2
+array 0 {WIDTH-2} 56 0 {HEIGHT//2} 112
+timestamp 1782900000
+transform 1 0 0 0 1 0
+box 0 0 84 28
 
-    else:
-        raise NotImplementedError
+use metal_stack  metal_stack_3
+array 0 {WIDTH-2} 56 0 {(HEIGHT-1)//2} 112
+timestamp 1782900000
+transform 1 0 56 0 1 56
+box 0 0 84 28
 
-print("<< end >>")
+use via_stack  via_stack_0
+array 0 {(HEIGHT-2)//2} 112 0 0 112
+timestamp 1782900000
+transform 0 -1 28 1 0 {84 if HEIGHT%2 == 1 else 56}
+box -14 0 42 28
+
+use via_stack  via_stack_1
+array 0 {(HEIGHT-2)//2} 112 0 0 112
+timestamp 1782900000
+transform 0 -1 {28*(2*WIDTH+1)} 1 0 {84 if HEIGHT%2 == 1 else 56}
+box -14 0 42 28
+
+use via_stack  via_stack_2
+array 0 {(WIDTH-5)//2} 112 0 {(HEIGHT)//2} 112
+timestamp 1782900000
+transform 1 0 168 0 1 0
+box -14 0 42 28
+
+use via_stack  via_stack_3
+array 0 {(WIDTH-4)//2} 112 0 {(HEIGHT-1)//2} 112
+timestamp 1782900000
+transform 1 0 112 0 1 56
+box -14 0 42 28
+
+<< end >>
+"""
+
+print(magic_file.replace("\n\n", "\n").strip())
 
